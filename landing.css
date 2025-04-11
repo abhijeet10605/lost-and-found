@@ -1,0 +1,109 @@
+/* Reset & Body */
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+  }
+  
+  body {
+    font-family: 'Segoe UI', sans-serif;
+    background: linear-gradient(to bottom right, #f7f5f2, #e7e4df);
+    color: #3a2e2e;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  /* Container */
+  .container {
+    padding: 20px;
+    animation: fadeIn 1.2s ease;
+  }
+  
+  /* Card */
+  .card {
+    background-color: #5b4636;
+    padding: 50px 60px;
+    border-radius: 20px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    max-width: 500px;
+    width: 90vw;
+  }
+  
+  /* Headings */
+  .card h1 {
+    font-size: 36px;
+    font-weight: bold;
+    color: #fff;
+  }
+  
+  .card h2 {
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 40px;
+    color: #fff;
+  }
+  
+  /* Buttons */
+  .buttons {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: 25px;
+  }
+  
+  .btn {
+    text-decoration: none;
+    background-color: white;
+    padding: 14px 28px;
+    color: #5b4636;
+    font-weight: 600;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    transition: all 0.2s ease;
+    position: relative;
+  }
+  
+  .btn:hover {
+    transform: scale(1.05);
+    background-color: #ece7e2;
+  }
+  
+  .btn:active {
+    transform: scale(0.96);
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(20px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  /* Responsive font scaling */
+  @media (max-width: 768px) {
+    .card {
+      padding: 40px 30px;
+    }
+  
+    .card h1 {
+      font-size: 30px;
+    }
+  
+    .card h2 {
+      font-size: 18px;
+    }
+  
+    .btn {
+      padding: 12px 24px;
+      font-size: 14px;
+    }
+  }
+  

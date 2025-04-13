@@ -1,70 +1,45 @@
-import { db, storage } from "./firebase-config.js";
-import { ref, push } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-database.js";
-import { ref as storageRef, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js";
+import { db, storage } from './firebase-config.js';
+import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js";
 
-// Listen for form submission
-document.getElementById("reportForm").addEventListener("submit", reportLostItem);
+document.getElementById('reportForm').addEventListener('submit', async (e) => {
+  e.preventDefault();
 
-function reportLostItem(event) {
-    event.preventDefault(); // Prevent page reload
-    console.log("Submitting form...");
+  const itemName = document.getElementById("itemName").value;
+  const category = document.getElementById("category").value;
+  const description = document.getElementById("description").value;
+  const date = document.getElementById("date").value;
+  const location = document.getElementById("location").value;
+  const uniqueId = document.getElementById("uniqueId").value;
+  const imageFile = document.getElementById("imageUpload").files[0];
 
-    // Get form values
-    const itemName = document.getElementById("itemName").value;
-    const category = document.getElementById("category").value;
-    const description = document.getElementById("description").value;
-    const location = document.getElementById("location").value;
-    const dateLost = document.getElementById("date").value; // Fix incorrect ID reference
-    const uniqueId = document.getElementById("uniqueId").value;
-    const imageFile = document.getElementById("imageUpload").files[0];
+  try {
+    let imageUrl = "";
 
-    console.log("Form Values:", { itemName, category, description, location, dateLost, uniqueId });
-
-    // Reference to "lostItems" in Realtime Database
-    const lostItemsRef = ref(db, "lostItems");
-
+    // Upload image to Firebase Storage
     if (imageFile) {
-        console.log("Uploading Image...");
-        const imageStorageRef = storageRef(storage, "lostItemImages/" + imageFile.name);
-
-        uploadBytes(imageStorageRef, imageFile)
-            .then((snapshot) => {
-                console.log("Image uploaded!");
-                return getDownloadURL(snapshot.ref);
-            })
-            .then((imageUrl) => {
-                console.log("Image URL:", imageUrl);
-                return saveLostItem(lostItemsRef, itemName, category, description, location, dateLost, uniqueId, imageUrl);
-            })
-            .catch((error) => {
-                console.error("❌ Image Upload Error:", error);
-                alert("Image upload failed.");
-            });
-    } else {
-        saveLostItem(lostItemsRef, itemName, category, description, location, dateLost, uniqueId, null);
+      const storageRef = ref(storage, `lost_items/${Date.now()}_${imageFile.name}`);
+      const snapshot = await uploadBytes(storageRef, imageFile);
+      imageUrl = await getDownloadURL(snapshot.ref);
     }
-}
 
-function saveLostItem(lostItemsRef, itemName, category, description, location, dateLost, uniqueId, imageUrl) {
-    push(lostItemsRef, {
-        itemName,
-        category,
-        description,
-        location,
-        dateLost,
-        uniqueId,
-        imageUrl,
-        timestamp: new Date().toISOString()
-    })
-    .then(() => {
-        console.log("✅ Item successfully reported!");
-        alert("Item successfully reported!");
-        document.getElementById("reportForm").reset();
-    })
-    .catch((error) => {
-        console.error("❌ Firebase Write Error:", error);
-        alert("Failed to save item. Check console for details.");
+    // Add data to Firestore
+    await addDoc(collection(db, "lostItems"), {
+      itemName,
+      category,
+      description,
+      date,
+      location,
+      uniqueId,
+      imageUrl,
+      createdAt: serverTimestamp()
     });
-}
-       
 
+    alert("Item reported successfully!");
+    document.getElementById("reportForm").reset();
+
+  } catch (error) {
+    console.error("Error adding document:", error);
+    alert("Error uploading data. Check console.");
+  }
+});

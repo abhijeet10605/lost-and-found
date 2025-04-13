@@ -1,59 +1,45 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Report Lost Item</title>
-    <link rel="stylesheet" href="report.css">
-    
-    <!-- Firebase SDKs -->
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Report Lost Item</title>
+  <link rel="stylesheet" href="report.css" />
 </head>
 <body>
+  <div class="container">
+    <h2>Report Item Lost</h2>
+    <form id="reportForm">
+      <input type="text" id="itemName" placeholder="Item name" required />
 
-    <div class="container">
-        <h2>Report Item Lost</h2>
+      <select id="category" required>
+        <option value="" disabled selected>Select Category</option>
+        <option value="Electronics">Electronics</option>
+        <option value="Books">Books</option>
+        <option value="Clothing">Clothing</option>
+        <option value="Others">Others</option>
+      </select>
 
-        <!-- Form for submitting lost item details -->
-        <form id="reportForm">
-            <input type="text" id="itemName" placeholder="Item name" required>
+      <textarea id="description" placeholder="Description" required></textarea>
 
-            <select id="category" required>
-                <option value="" disabled selected>Select Category</option>
-                <option value="Electronics">Electronics</option>
-                <option value="Books">Books</option>
-                <option value="Clothing">Clothing</option>
-                <option value="Others">Others</option>
-            </select>
+      <div class="row">
+        <input type="date" id="date" required />
+        <input type="text" id="location" placeholder="Location" required />
+      </div>
 
-            <textarea id="description" placeholder="Description" required></textarea>
+      <input type="text" id="uniqueId" placeholder="Unique Identification" required />
 
-            <div class="row">
-                <input type="date" id="date" required>
-                <input type="text" id="location" placeholder="Location" required>
-            </div>
+      <div class="upload-box">
+        <input type="file" id="imageUpload" />
+        <p>Upload images</p>
+      </div>
 
-            <input type="text" id="uniqueId" placeholder="Unique Identification" required>
+      <button type="submit" id="submitBtn">Upload Details</button>
+    </form>
+  </div>
 
-            <div class="upload-box">
-                <input type="file" id="imageUpload">
-                <p>Upload images</p>
-            </div>
-
-            <!-- Submit Button inside form -->
-            <button type="submit" id="submitBtn">Upload Details</button>
-        </form>
-    </div>
-
-
-    
-    
-    <script type="module" src="firebase-config.js"></script>
-<script type="module" src="report.js"></script>
-
-
-
+  <!-- ONLY these scripts! -->
+  <script type="module" src="firebase-config.js"></script>
+  <script type="module" src="report.js"></script>
 </body>
 </html>

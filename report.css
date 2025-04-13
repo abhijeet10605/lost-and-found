@@ -68,5 +68,7 @@ button:hover {
     background: #125abe;
 }
 
-
-
+#description {
+    min-width: 100%;
+    max-width: 100%;
+}

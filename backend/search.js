@@ -1,9 +1,9 @@
-function searchItems(array, query) {
+export function searchItems(array, query) {
     const searchQuery = query.toLowerCase();
 
     return array.filter(item =>
-        item.title.toLowerCase().includes(searchQuery) ||
-        item.location.toLowerCase().includes(searchQuery) ||
-        item.date.toLowerCase().includes(searchQuery)
+        (typeof item.itemName === 'string' && item.itemName.toLowerCase().includes(searchQuery)) ||
+        (typeof item.location === 'string' && item.location.toLowerCase().includes(searchQuery)) ||
+        (typeof item.date === 'string' && item.date.toLowerCase().includes(searchQuery))
     );
 }

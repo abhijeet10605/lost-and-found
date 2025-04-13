@@ -1,21 +1,25 @@
-async function retrive() {
-    const usersArray = [];
+import { collection, getDocs } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
+import { firestore } from '../firebase-config.js';
 
-    try {
-        const snapshot = await db.collection("users").get();
+export async function retrieve() {
+  const reportsArray = [];
 
-        snapshot.forEach(doc => {
-            usersArray.push({
-                id: doc.id,
-                ...doc.data()
-            });
-        });
+  try {
+    const lostItemsRef = collection(firestore, "LostAndFound", "app", "lostItems");
+    const snapshot = await getDocs(lostItemsRef);
 
-        console.log("All users:", usersArray);
-        return usersArray;
+    snapshot.forEach(doc => {
+      reportsArray.push({
+        id: doc.id,
+        ...doc.data()
+      });
+    });
 
-    } catch (error) {
-        console.error("Error fetching documents:", error);
-        return [];
-    }
+    console.log("All items:", reportsArray);
+    return reportsArray;
+
+  } catch (error) {
+    console.error("Error fetching documents:", error);
+    return [];
+  }
 }

@@ -1,13 +1,11 @@
+import { retrieve } from './backend/retrive.js';
+import { searchItems } from './backend/search.js';
+
 function toggleMode() {
   document.body.classList.toggle("dark-mode");
 }
 
-
-const data = [
-  { title: "Music Fest", image: "https://cdn.pixabay.com/photo/2015/11/03/09/09/magnifying-glass-1020142_640.jpg", location: "Mumbai" },
-  { title: "Art Expo", image: "https://cdn.pixabay.com/photo/2015/11/03/09/09/magnifying-glass-1020142_640.jpg", location: "Delhi" },
-  { title: "Food Fair", image: "https://cdn.pixabay.com/photo/2015/11/03/09/09/magnifying-glass-1020142_640.jpg", location: "Pune" }
-];
+let data;
 
 function displayCards(array) {
   const cardContainer = document.getElementById("cardContainer");
@@ -19,11 +17,11 @@ function displayCards(array) {
 
     col.innerHTML = `
       <div class="card h-100">
-        <img src="${item.image}" class="card-img-top" alt="${item.title}">
+        <img src="${item.imageUrl}" class="card-img-top" alt="${item.itemName}">
         <div class="card-body d-flex flex-column">
-          <h5 class="card-title">${item.title}</h5>
+          <h5 class="card-title">${item.itemName}</h5>
           <p class="card-text">${item.location}</p>
-          <a href="#" class="btn btn-primary mt-auto">View More</a>
+          <a href="#" class="btn btn-primary mt-auto">Next</a>
         </div>
       </div>
     `;
@@ -32,4 +30,14 @@ function displayCards(array) {
   });
 }
 
-displayCards(data);
+document.addEventListener("DOMContentLoaded", async () => {
+  data = await retrieve();
+  displayCards(data);
+
+  const searchBar = document.getElementById("search-bar");
+  searchBar.addEventListener("input", () => {
+    const query = searchBar.value.trim();
+    const filteredData = searchItems(data, query);
+    displayCards(filteredData);
+  });
+});

@@ -21,7 +21,7 @@ function displayCards(array) {
         <div class="card-body d-flex flex-column">
           <h5 class="card-title">${item.itemName}</h5>
           <p class="card-text">${item.location}</p>
-          <a href="#" class="btn btn-primary mt-auto">Next</a>
+          <a href="./item-details.html?name=${item.itemName}&imageUrl=${item.imageUrl}" class="btn btn-primary mt-auto">Next</a>
         </div>
       </div>
     `;

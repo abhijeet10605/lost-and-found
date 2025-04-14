@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Lost Item Details</title>
+  <link rel="stylesheet" href="image-detail.css">
+</head>
+<body>
+  <header>
+    <h1>Lost Item Details</h1>
+    <nav>
+      <a href="report.html">Report Item</a>
+      <a href="signup.html">Sign Up</a>
+    </nav>
+  </header>
+
+  <div class="detail-container">
+    <div class="item-box">
+      <img id="itemImage" alt="Lost Item" />
+
+      <div class="details">
+        <p><strong>Category:</strong> <span id="itemCategory"></span></p>
+        <p><strong>Date:</strong> <span id="itemDate"></span></p>
+        <p><strong>Location:</strong> <span id="itemLocation"></span></p>
+        <p><strong>Description:</strong> <span id="itemDescription"></span></p>
+        <p><strong>Unique Identification:</strong> <span id="itemUniqueIdentification"></span></p>
+
+
+        <button id="claimBtn">Claim Item</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal for Enlarged Image -->
+  <div id="imageModal" class="modal">
+    <span class="close">&times;</span>
+    <img class="modal-content" id="enlargedImage" />
+  </div>
+
+  <script type="module" src="image-detail.js"></script>
+</body>
+</html>

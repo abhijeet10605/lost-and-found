@@ -10,7 +10,7 @@ document.getElementById('reportForm').addEventListener('submit', async (e) => {
   const description = document.getElementById("description").value;
   const date = document.getElementById("date").value;
   const location = document.getElementById("location").value;
-  const uniqueId = document.getElementById("uniqueId").value;
+  const uniqueId = document.getElementById("uniqueIdentification").value;
   const imageFile = document.getElementById("imageUpload").files[0];
 
   try {
@@ -32,7 +32,7 @@ document.getElementById('reportForm').addEventListener('submit', async (e) => {
       description,
       date,
       location,
-      uniqueId,
+      uniqueIdentification,
       imageUrl,
       createdAt: serverTimestamp(),
       // id

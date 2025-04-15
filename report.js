@@ -1,16 +1,22 @@
 import { db, storage, firestore } from './firebase-config.js';
 import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-firestore.js";
 import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js";
+import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
 document.getElementById('reportForm').addEventListener('submit', async (e) => {
   e.preventDefault();
+
+  const params = new URLSearchParams(window.location.search);
+  const email = params.get("email");
+
+  console.log("Email:", email); 
 
   const itemName = document.getElementById("itemName").value;
   const category = document.getElementById("category").value;
   const description = document.getElementById("description").value;
   const date = document.getElementById("date").value;
   const location = document.getElementById("location").value;
-  const uniqueId = document.getElementById("uniqueIdentification").value;
+  const uniqueIdentification = document.getElementById("uniqueId").value;
   const imageFile = document.getElementById("imageUpload").files[0];
 
   try {
@@ -23,10 +29,12 @@ document.getElementById('reportForm').addEventListener('submit', async (e) => {
       imageUrl = await getDownloadURL(snapshot.ref);
     }
 
-    // const id = getUniqueId();
+    // Generate a UUID
+    const uniqueId = uuidv4().toUpperCase();
+    console.log(uniqueId);
 
     // Add data to Firestore
-    await addDoc(collection(firestore, "LostAndFound", "app", "lostItems"), {
+    await addDoc(collection(firestore, "LostAndFound", "app", "lostItems",), {
       itemName,
       category,
       description,
@@ -34,8 +42,9 @@ document.getElementById('reportForm').addEventListener('submit', async (e) => {
       location,
       uniqueIdentification,
       imageUrl,
+      email,
       createdAt: serverTimestamp(),
-      // id
+      id: uniqueId,
     });
 
     alert("Item reported successfully!");

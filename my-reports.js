@@ -23,39 +23,41 @@ function displayCards(array) {
   console.log("Email:", email); 
 
   array.forEach(item => {
-    const col = document.createElement("div");
-    col.style.width = "400px";
-    col.style.marginBottom = "20px";
-
-    // 🟡 Conditionally render the Claim button
-    const claimButtonHTML = item.email !== email
-      ? `<a href="./chats/chats.html?email=${item.email}" class="btn btn-primary mt-auto">Claim</a>`
-      : `<a href="#?email=${item.email}" class="btn btn-primary mt-auto">Claimed</a>`;
-
-    col.innerHTML = `
-      <div class="card h-100">
-        <div style="height: 200px; overflow: hidden; cursor: pointer;" class="image-container">
-          <img src="${item.imageUrl}" class="card-img-top" alt="${item.itemName}" style="width: 100%; height: 100%; object-fit: cover;">
-        </div>
-        <div class="card-body d-flex flex-column">
-          <h5 class="card-title" style="word-wrap: break-word;">${item.itemName}</h5>
-          <p class="card-text mb-1"><strong>Location:</strong> ${item.location}</p>
-          <p class="card-text mb-1"><strong>Category:</strong> ${item.category}</p>
-          <p class="card-text mb-1"><strong>Date:</strong> ${item.date}</p>
-          <p class="card-text mb-1" style="word-wrap: break-word;">
-            <strong>Unique Identification:</strong> ${item.uniqueId}
-          </p>
-          ${claimButtonHTML}
-        </div>
-      </div>
-    `;
-
-    cardContainer.appendChild(col);
-
-    const imageContainer = col.querySelector('.image-container');
-    imageContainer.addEventListener('click', function() {
-      displayFullImage(item.imageUrl, item.itemName);
-    });
+    if(item.email === email) {
+        const col = document.createElement("div");
+        col.style.width = "400px";
+        col.style.marginBottom = "20px";
+    
+        // 🟡 Conditionally render the Claim button
+        const claimButtonHTML = item.email !== email
+          ? `<a href="./chats/chats.html?email=${item.email}" class="btn btn-primary mt-auto">Claim</a>`
+          : `<a href="#?email=${item.email}" class="btn btn-primary mt-auto">Delete</a>`;
+    
+        col.innerHTML = `
+          <div class="card h-100">
+            <div style="height: 200px; overflow: hidden; cursor: pointer;" class="image-container">
+              <img src="${item.imageUrl}" class="card-img-top" alt="${item.itemName}" style="width: 100%; height: 100%; object-fit: cover;">
+            </div>
+            <div class="card-body d-flex flex-column">
+              <h5 class="card-title" style="word-wrap: break-word;">${item.itemName}</h5>
+              <p class="card-text mb-1"><strong>Location:</strong> ${item.location}</p>
+              <p class="card-text mb-1"><strong>Category:</strong> ${item.category}</p>
+              <p class="card-text mb-1"><strong>Date:</strong> ${item.date}</p>
+              <p class="card-text mb-1" style="word-wrap: break-word;">
+                <strong>Unique Identification:</strong> ${item.uniqueId}
+              </p>
+              ${claimButtonHTML}
+            </div>
+          </div>
+        `;
+    
+        cardContainer.appendChild(col);
+    
+        const imageContainer = col.querySelector('.image-container');
+        imageContainer.addEventListener('click', function() {
+          displayFullImage(item.imageUrl, item.itemName);
+        });
+    }
   });
 }
 

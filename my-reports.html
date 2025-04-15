@@ -4,8 +4,27 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="my-reports.css">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.5/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-SgOJa3DmI69IUzQ2PVdRZhwQ+dy64/BUtbMJw1MZ8t5HZApcHrRKUc4W0kG879m7" crossorigin="anonymous">
 </head>
 <body>
+  <nav class="navbar">
+    <div class="nav-left">
+      <h1>Lost & Found</h1>
+    </div>
+    <div class="nav-right">
+      <a href="my-reports.html">My Reports</a>
+      <a href="./chats/chats.html">Chats</a>
+      <a href="#" id="reportLink">Report</a>
+      <a href="login.html" id="loginLink">Login</a>
+      <a href="signup.html" id="signupLink">Signup</a>
+      <a href="#" id="logoutLink" style="display: none;">Logout</a>
+      <input type="text" placeholder="Search" id="search-bar">
+      <button class="mode-toggle" onclick="toggleMode()">🌙</button>
+    </div>
+  </nav>
+  
     <div class="container mt-4">
       <div id="cardContainer" class="row g-4"></div>
     </div>

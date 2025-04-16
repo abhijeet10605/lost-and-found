@@ -1,11 +1,96 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Chats</title>
-</head>
-<body>
-    
-</body>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Chat Window</title>
+    <!-- Include the CometChat Widget SDK instead of the Chat SDK -->
+    <script src="https://widget-js.cometchat.io/v3/cometchatwidget.js"></script>
+
+    <style>
+      * {
+        padding: 0;
+        margin: 0;
+        box-sizing: border-box;
+      }
+
+      #cometchat {
+        overflow: hidden;
+        margin: 20px;
+        border-radius: 20px;
+        border: 1px solid rgb(69, 69, 69);
+      }
+    </style>
+  </head>
+  <body>
+    <!-- Container element for the chat widget -->
+    <div id="cometchat"></div>
+
+    <script>
+      // Retrieve the current user and reporter email from URL parameters.
+      const urlParams = new URLSearchParams(window.location.search);
+      const currentEmail = urlParams.get("currentEmail"); // This is the logged-in user's identifier.
+      const reporterEmail = urlParams.get("reporterEmail"); // The item reporter's identifier.
+
+      // Replace these placeholders with your actual credentials from the CometChat dashboard.
+      const appID = "273329924d9c4a2b";
+      const appRegion = "in";
+      const authKey = "4768e4bc22a09b8c619dd82be1cf3a04b95cfcd7";
+      const widgetID = "727e83b2-2a6f-4cf7-b9a3-030c41371695";
+
+      // Wait for the DOM to fully load
+      document.addEventListener("DOMContentLoaded", function () {
+        // Make sure CometChatWidget is defined
+        if (typeof CometChatWidget === "undefined") {
+          console.error(
+            "CometChatWidget is not defined. Check if the script loaded correctly."
+          );
+          alert(
+            "Chat widget failed to load. Please refresh the page or try again later."
+          );
+          return;
+        }
+
+        // Initialize the CometChat Widget.
+        CometChatWidget.init({
+          appID: appID,
+          appRegion: appRegion,
+          authKey: authKey,
+        })
+          .then((response) => {
+            console.log(
+              "CometChat Initialization completed successfully:",
+              response
+            );
+
+            // Log in the current user to CometChat.
+            return CometChatWidget.login({
+              uid: currentEmail.split("@")[0],
+            });
+          })
+          .then((loginResponse) => {
+            console.log("CometChat login successful:", loginResponse);
+
+            // Launch the chat widget.
+            CometChatWidget.launch({
+              widgetID: widgetID,
+              target: "#cometchat", // Target the container element
+              docked: false, // Whether the widget is docked
+              alignment: "right", // Alignment of the chat widget
+              roundedCorners: true, // Optional UI preference
+              height: "94vh", // Height of the widget
+              width: "vw", // Width of the widget
+              defaultType: "user", // Indicate that this is a one-to-one chat
+              chatWithUser: reporterEmail.split("@")[0],
+            });
+          })
+          .catch((error) => {
+            console.error("Error initializing or launching CometChat:", error);
+            alert(
+              "An error occurred while setting up the chat. Please try again later."
+            );
+          });
+      });
+    </script>
+  </body>
 </html>

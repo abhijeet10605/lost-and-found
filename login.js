@@ -15,7 +15,7 @@ document.getElementById("loginForm").addEventListener("submit", (e) => {
   signInWithEmailAndPassword(auth, email, password)
     .then((userCredential) => {
       alert("Login successful!");
-      window.location.href = "./report.html?email="+email;
+      window.location.href = "./main-page.html?email="+email;
     })
     .catch((error) => {
       alert(error.message);

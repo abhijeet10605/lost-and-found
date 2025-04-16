@@ -10,7 +10,7 @@ let data;
 function displayCards(array) {
   const cardContainer = document.getElementById("cardContainer");
   cardContainer.innerHTML = ""; // Clear existing cards
-  
+
   cardContainer.style.display = "flex";
   cardContainer.style.flexWrap = "wrap";
   cardContainer.style.justifyContent = "space-evenly";
@@ -20,7 +20,10 @@ function displayCards(array) {
   // const email = params.get("email"); 
   const email = "abc@gmail.com"; // NOTE: Cut this line when parameters are added in all anchor tags.
 
-  console.log("Email:", email); 
+  document.querySelector("#my-reports-tag").setAttribute("href", "./my-reports.html?email="+email);
+
+
+  console.log("Email:", email);
 
   array.forEach(item => {
     const col = document.createElement("div");
@@ -28,9 +31,11 @@ function displayCards(array) {
     col.style.marginBottom = "20px";
 
     // 🟡 Conditionally render the Claim button
-    const claimButtonHTML = item.email !== email
-      ? `<a href="./chats/chats.html?email=${item.email}" class="btn btn-primary mt-auto">Claim</a>`
-      : `<a href="#?email=${item.email}" class="btn btn-primary mt-auto">Claimed</a>`;
+// Replace existing claimButtonHTML assignment with:
+const claimButtonHTML = item.email !== email
+  ? `<a href="./chats/chats.html?currentEmail=${encodeURIComponent(email)}&reporterEmail=${encodeURIComponent(item.email)}" class="btn btn-primary mt-auto">Claim</a>`
+  : `<a href="#?email=${item.email}" class="btn btn-primary mt-auto">Claimed</a>`;
+
 
     col.innerHTML = `
       <div class="card h-100">
@@ -53,18 +58,17 @@ function displayCards(array) {
     cardContainer.appendChild(col);
 
     const imageContainer = col.querySelector('.image-container');
-    imageContainer.addEventListener('click', function() {
+    imageContainer.addEventListener('click', function () {
       displayFullImage(item.imageUrl, item.itemName);
     });
   });
 }
 
-
 // Function to display the full image in a modal
 function displayFullImage(imageUrl, imageName) {
   // Create modal if it doesn't exist
   let modal = document.getElementById('imageModal');
-  
+
   if (!modal) {
     modal = document.createElement('div');
     modal.id = 'imageModal';
@@ -77,7 +81,7 @@ function displayFullImage(imageUrl, imageName) {
     modal.style.height = '100%';
     modal.style.overflow = 'auto';
     modal.style.backgroundColor = 'rgba(0,0,0,0.9)';
-    
+
     const closeBtn = document.createElement('span');
     closeBtn.innerHTML = '&times;';
     closeBtn.style.position = 'absolute';
@@ -87,7 +91,7 @@ function displayFullImage(imageUrl, imageName) {
     closeBtn.style.fontSize = '40px';
     closeBtn.style.fontWeight = 'bold';
     closeBtn.style.cursor = 'pointer';
-    
+
     const modalImg = document.createElement('img');
     modalImg.id = 'modalImg';
     modalImg.style.margin = 'auto';
@@ -98,7 +102,7 @@ function displayFullImage(imageUrl, imageName) {
     modalImg.style.top = '50%';
     modalImg.style.left = '50%';
     modalImg.style.transform = 'translate(-50%, -50%)';
-    
+
     const caption = document.createElement('div');
     caption.id = 'caption';
     caption.style.margin = 'auto';
@@ -113,29 +117,29 @@ function displayFullImage(imageUrl, imageName) {
     caption.style.bottom = '0';
     caption.style.left = '50%';
     caption.style.transform = 'translateX(-50%)';
-    
+
     modal.appendChild(closeBtn);
     modal.appendChild(modalImg);
     modal.appendChild(caption);
     document.body.appendChild(modal);
-    
+
     // Close the modal when close button is clicked
-    closeBtn.onclick = function() {
+    closeBtn.onclick = function () {
       modal.style.display = 'none';
     };
-    
+
     // Close the modal when clicking outside the image
-    modal.onclick = function(event) {
+    modal.onclick = function (event) {
       if (event.target === modal) {
         modal.style.display = 'none';
       }
     };
   }
-  
+
   // Display the modal with the selected image
   const modalImg = document.getElementById('modalImg');
   const caption = document.getElementById('caption');
-  
+
   modal.style.display = 'block';
   modalImg.src = imageUrl;
   caption.innerHTML = imageName;

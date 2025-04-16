@@ -1,5 +1,6 @@
 import { retrieve } from './backend/retrive.js';
 import { searchItems } from './backend/search.js';
+import { deleteDocumentsById } from './backend/delete.js'
 
 function toggleMode() {
   document.body.classList.toggle("dark-mode");
@@ -17,8 +18,7 @@ function displayCards(array) {
   cardContainer.style.gap = "20px";
 
   const params = new URLSearchParams(window.location.search);
-  // const email = params.get("email"); 
-  const email = "abc@gmail.com"; // NOTE: Cut this line when parameters are added in all anchor tags.
+  const email = params.get("email"); 
 
   console.log("Email:", email); 
 
@@ -28,10 +28,8 @@ function displayCards(array) {
         col.style.width = "400px";
         col.style.marginBottom = "20px";
     
-        // 🟡 Conditionally render the Claim button
-        const claimButtonHTML = item.email !== email
-          ? `<a href="./chats/chats.html?email=${item.email}" class="btn btn-primary mt-auto">Claim</a>`
-          : `<a href="#?email=${item.email}" class="btn btn-primary mt-auto">Delete</a>`;
+        // Update the delete button to call our delete function
+        const deleteButtonHTML = `<button class="btn btn-danger mt-auto delete-btn" data-uniqueid="${item.uniqueId}">Delete</button>`;
     
         col.innerHTML = `
           <div class="card h-100">
@@ -46,7 +44,7 @@ function displayCards(array) {
               <p class="card-text mb-1" style="word-wrap: break-word;">
                 <strong>Unique Identification:</strong> ${item.uniqueId}
               </p>
-              ${claimButtonHTML}
+              ${deleteButtonHTML}
             </div>
           </div>
         `;
@@ -57,10 +55,40 @@ function displayCards(array) {
         imageContainer.addEventListener('click', function() {
           displayFullImage(item.imageUrl, item.itemName);
         });
+        
+        // Add event listener to the delete button
+        const deleteBtn = col.querySelector('.delete-btn');
+        deleteBtn.addEventListener('click', async function() {
+          
+          // Confirm before deleting
+          if (confirm("Are you sure you want to delete this item?")) {
+            // Show loading state
+            this.textContent = "Deleting...";
+            this.disabled = true;
+
+            console.log(item.id)
+            
+            const success = await deleteDocumentsById(item.id);
+
+            function delay(ms) {
+              return new Promise(resolve => setTimeout(resolve, ms));
+            }   
+            
+            if (success) {
+              alert("Item deleted successfully!");
+              // Refresh the page or re-fetch data
+              await delay(5000);
+              location.reload();
+            } else {
+              alert("Failed to delete item. Please try again.");
+              this.textContent = "Delete";
+              this.disabled = false;
+            }
+          }
+        });
     }
   });
 }
-
 
 // Function to display the full image in a modal
 function displayFullImage(imageUrl, imageName) {

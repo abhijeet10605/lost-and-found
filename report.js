@@ -40,7 +40,7 @@ document.getElementById('reportForm').addEventListener('submit', async (e) => {
       description,
       date,
       location,
-      uniqueIdentification,
+      uniqueId: uniqueIdentification,
       imageUrl,
       email,
       createdAt: serverTimestamp(),

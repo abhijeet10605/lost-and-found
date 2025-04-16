@@ -7,6 +7,9 @@ function toggleMode() {
 
 let data;
 
+const params = new URLSearchParams(window.location.search);
+const email = params.get("email");
+
 function displayCards(array) {
   const cardContainer = document.getElementById("cardContainer");
   cardContainer.innerHTML = ""; // Clear existing cards
@@ -16,14 +19,7 @@ function displayCards(array) {
   cardContainer.style.justifyContent = "space-evenly";
   cardContainer.style.gap = "20px";
 
-  const params = new URLSearchParams(window.location.search);
- const email = params.get("email"); 
-
-  document.querySelector("#my-reports-tag").setAttribute("href", "./my-reports.html?email="+email);
-
-  document.querySelector("#reportLink").setAttribute("href", "./report.html?email="+email);
-
-  document.querySelector("#chats").setAttribute("href", "./chats/chats.html?currentEmail="+encodeURIComponent(email)+"&reporterEmail="+encodeURIComponent("unknown@gmail.com"));
+  document.querySelector("#my-reports-tag").setAttribute("href", "./my-reports.html?email=" + email);
 
   console.log("Email:", email);
 
@@ -33,10 +29,10 @@ function displayCards(array) {
     col.style.marginBottom = "20px";
 
     // 🟡 Conditionally render the Claim button
-// Replace existing claimButtonHTML assignment with:
-const claimButtonHTML = item.email !== email
-  ? `<a href="./chats/chats.html?currentEmail=${encodeURIComponent(email)}&reporterEmail=${encodeURIComponent(item.email)}" class="btn btn-primary mt-auto">Claim</a>`
-  : `<a href="#?email=${item.email}" class="btn btn-primary mt-auto">Claimed</a>`;
+    // Replace existing claimButtonHTML assignment with:
+    const claimButtonHTML = item.email !== email
+      ? `<a href="./chats/chats.html?currentEmail=${encodeURIComponent(email)}&reporterEmail=${encodeURIComponent(item.email)}" class="btn btn-primary mt-auto">Claim</a>`
+      : `<a href="#?email=${item.email}" class="btn btn-primary mt-auto">Claimed</a>`;
 
 
     col.innerHTML = `
@@ -65,6 +61,11 @@ const claimButtonHTML = item.email !== email
     });
   });
 }
+
+document.querySelector("#reportLink").setAttribute("href", "./report.html?name=random&email=" + email);
+
+document.querySelector("#chats").setAttribute("href", "./chats/chats.html?currentEmail=" + encodeURIComponent(email) + "&reporterEmail=" + encodeURIComponent("unknown@gmail.com"));
+
 
 // Function to display the full image in a modal
 function displayFullImage(imageUrl, imageName) {

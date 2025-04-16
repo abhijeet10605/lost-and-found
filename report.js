@@ -3,13 +3,11 @@ import { collection, addDoc, serverTimestamp } from "https://www.gstatic.com/fir
 import { ref, uploadBytes, getDownloadURL } from "https://www.gstatic.com/firebasejs/10.0.0/firebase-storage.js";
 import { v4 as uuidv4 } from 'https://jspm.dev/uuid';
 
+const urlParams = new URLSearchParams(window.location.search);
+const email = urlParams.get("email"); // This is the logged-in user's identifier.
+
 document.getElementById('reportForm').addEventListener('submit', async (e) => {
   e.preventDefault();
-
-  const params = new URLSearchParams(window.location.search);
-  const email = params.get("email");
-
-  console.log("Email:", email); 
 
   const itemName = document.getElementById("itemName").value;
   const category = document.getElementById("category").value;
@@ -49,6 +47,8 @@ document.getElementById('reportForm').addEventListener('submit', async (e) => {
 
     alert("Item reported successfully!");
     document.getElementById("reportForm").reset();
+
+    window.location.href = './main-page.html?email='+email;
 
   } catch (error) {
     console.error("Error adding document:", error);

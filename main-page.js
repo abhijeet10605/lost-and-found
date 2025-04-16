@@ -17,11 +17,13 @@ function displayCards(array) {
   cardContainer.style.gap = "20px";
 
   const params = new URLSearchParams(window.location.search);
-  // const email = params.get("email"); 
-  const email = "abc@gmail.com"; // NOTE: Cut this line when parameters are added in all anchor tags.
+ const email = params.get("email"); 
 
   document.querySelector("#my-reports-tag").setAttribute("href", "./my-reports.html?email="+email);
 
+  document.querySelector("#reportLink").setAttribute("href", "./report.html?email="+email);
+
+  document.querySelector("#chats").setAttribute("href", "./chats/chats.html?currentEmail="+encodeURIComponent(email)+"&reporterEmail="+encodeURIComponent("unknown@gmail.com"));
 
   console.log("Email:", email);
 

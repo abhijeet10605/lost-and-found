@@ -12,10 +12,19 @@
       <h1>Lost & Found</h1>
       <h2>portal</h2>
       <div class="buttons">
-        <a href="report.html" class="btn">report item</a>
-        <a href="main-page.html" class="btn">search item</a>
+        <a id="one" href="" class="btn">report item</a>
+        <a id="two" href="" class="btn">search item</a>
       </div>
     </div>
   </div>
+
+  <script>
+      const params = new URLSearchParams(window.location.search);
+      const email = params.get("email"); 
+
+      document.querySelector("#one").setAttribute("href", "./report.html?email="+email);
+      document.querySelector("#two").setAttribute("href", "./main-page.html?email="+email);
+
+  </script>
 </body>
 </html>

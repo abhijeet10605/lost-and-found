@@ -1,6 +1,6 @@
 body {
     font-family: Arial, sans-serif;
-    background-color: #f5f5f5;
+    background-color: #F8F6F2;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -8,6 +8,9 @@ body {
     margin: 0;
 }
 
+h2{
+  color: #5b4f47;
+}
 .container {
     width: 300px;
     background: white;
@@ -23,10 +26,12 @@ input {
     margin: 10px 0;
     border: 1px solid #ccc;
     border-radius: 5px;
+    border-color: #534741;
+    background-color: #ddc1a7;
 }
 
 button {
-    background-color: #28a745;
+    background-color: #534741;
     color: white;
     padding: 10px;
     border: none;
@@ -36,7 +41,7 @@ button {
 }
 
 button:hover {
-    background-color: #218838;
+    background-color: #6C574A;
 }
 
 p {

@@ -9,10 +9,18 @@
   --text-light: #ffffff;
 }
 
+input {
+  background-color: var(--light-beige);
+  border: 2px solid var(--brown-dark);
+  color: var(--text-dark);
+  border-radius: 5px;
+}
+
 body {
   margin: 0;
   font-family: 'Inter', sans-serif;
-  background-color: var(--off-white);
+  background: linear-gradient(to bottom right, #f7f5f2, #e7e4df);
+  /* background-color: var(--off-white); */
   color: var(--text-dark);
   transition: all 0.3s ease;
 }

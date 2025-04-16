@@ -44,6 +44,7 @@ function displayCards(array) {
           <h5 class="card-title" style="word-wrap: break-word;">${item.itemName}</h5>
           <p class="card-text mb-1"><strong>Location:</strong> ${item.location}</p>
           <p class="card-text mb-1"><strong>Category:</strong> ${item.category}</p>
+          <p class="card-text mb-1"><strong>Chat id:</strong> ${item.email.split("@")[0]}</p>
           <p class="card-text mb-1"><strong>Date:</strong> ${item.date}</p>
           <p class="card-text mb-1" style="word-wrap: break-word;">
             <strong>Unique Identification:</strong> ${item.uniqueId}

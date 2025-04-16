@@ -44,6 +44,7 @@ document.getElementById("signupForm").addEventListener("submit", async function 
             username,
             contact,
             collegeID,
+            chat_id:email.split("@")[0],
             createdAt: serverTimestamp(),
         });
 

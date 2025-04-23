@@ -1,9 +1,23 @@
 import { retrieve } from './backend/retrive.js';
 import { searchItems } from './backend/search.js';
 
+// function toggleMode() {
+//   document.body.classList.toggle("dark-mode");
+// }
+
 function toggleMode() {
   document.body.classList.toggle("dark-mode");
+
+  const modeButton = document.querySelector(".mode-toggle");
+  if (document.body.classList.contains("dark-mode")) {
+    modeButton.textContent = "☀️";
+  } else {
+    modeButton.textContent = "🌙";
+  }
 }
+
+// ✅ Fix: make it globally accessible
+window.toggleMode = toggleMode;
 
 let data;
 
